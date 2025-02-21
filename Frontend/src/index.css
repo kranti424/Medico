@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Add after Tailwind imports
+
+.goog-te-gadget {
+  @apply font-sans !important;
+}
+
+.goog-te-gadget-simple {
+  @apply border-0 bg-transparent !important;
+}
+
+.goog-te-gadget-simple .goog-te-menu-value {
+  @apply text-gray-700 font-medium !important;
+}
+
+.goog-te-gadget-simple .goog-te-menu-value:hover {
+  @apply text-purple-600 !important;
+}
+
+.goog-te-gadget-simple .goog-te-menu-value span {
+  @apply border-0 !important;
+}
+ */
+
+/* 
+.VIpgJd-ZVi9od-l4eHX-hSRGPd {
+  @apply hidden;
+}
+
+*/
+@keyframes tilt {
+  0%, 50%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(0.5deg);
+  }
+  75% {
+    transform: rotate(-0.5deg);
+  }
+}
+
+
+.animate-tilt {
+  animation: tilt 10s infinite linear;
+}
+
+.input-field {
+  @apply w-full px-4 py-2 border border-white/30 rounded-lg 
+         bg-white/50 backdrop-blur-sm text-gray-800 
+         focus:ring-2 focus:ring-blue-400 focus:border-transparent 
+         placeholder-gray-500 transition duration-200;
+}
+
+.btn-primary {
+  @apply px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 
+         transition duration-200 ml-auto;
+}
+
+.btn-secondary {
+  @apply px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 
+         transition duration-200;
+}
+.select-field {
+  @apply w-full px-4 py-2 border border-white/30 rounded-lg 
+         bg-white/50 backdrop-blur-sm text-gray-800 
+         focus:ring-2 focus:ring-blue-400 focus:border-transparent 
+         transition duration-200;
+}
+
+.checkbox-field {
+  @apply h-5 w-5 rounded border-white/30 
+         text-blue-600 focus:ring-blue-400 
+         bg-white/50 transition duration-200;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ... existing styles ... */
+
+/* Form Input Styles */
+input, select, textarea {
+  @apply w-full px-4 py-2.5 border border-blue-200 rounded-md bg-white/70
+    focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent
+    hover:border-blue-300 transition-colors backdrop-blur-sm;
+}
+
+/* Label Styles */
+label {
+  @apply block mb-2 text-sm font-medium text-gray-700;
+}
+
