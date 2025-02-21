@@ -6,7 +6,6 @@ require("dotenv").config();
 
 
 const nearbyController = {
-  // Find nearby doctors
   findNearbyDoctors: async (req, res) => {
     try {
       const { latitude, longitude, radius = 10 } = req.body;
