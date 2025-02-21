@@ -4,7 +4,7 @@ const cloudinary = require("../config/cloudinary");
 
 const addDoctor = async (req, res) => {
   try {
-    const { password, confirmPassword, ...doctorData } = req.body;
+    const { password, confirmPassword,...doctorData } = req.body;
 
     // Parse JSON strings back to objects/arrays
     ["degrees", "specialties", "availableDays", "timeSlots"].forEach(
