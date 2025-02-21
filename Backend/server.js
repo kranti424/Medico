@@ -30,7 +30,7 @@ const app = express();
 // const cors = require("cors");
 
 const corsOptions = {
-  origin: ["https://medico-healthcare.vercel.app", "http://localhost:5173"], // Your frontend URL
+  origin: ["https://medico-psi-nine.vercel.app", "http://localhost:5173"], // Your frontend URL
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
