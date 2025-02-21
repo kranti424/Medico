@@ -34,7 +34,7 @@ const Auth = () => {
   const onSubmit = async (data) => {
     setLoading(true);
     try {
-      const endpoint = isLogin ? "/api/users/login" : "/api/users/register";
+      const endpoint = isLogin ? "api/users/login" : "api/users/register";
       const formData = new FormData();
 
       // Add all form fields to FormData
