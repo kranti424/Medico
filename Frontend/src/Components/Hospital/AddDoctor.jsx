@@ -275,7 +275,7 @@ const AddDoctor = () => {
       });
 
       const response = await fetch(
-        "https://medicobackend.vercel.app//api/doctors/add",
+        "https://medicobackend.vercel.app/api/doctors/add",
         {
           method: "POST",
           credentials: "include",

@@ -15,7 +15,7 @@ const FindHospital = () => {
   const fetchNearbyHospitals = async (latitude, longitude) => {
     try {
       const response = await axios.get(
-        "https://medicobackend.vercel.app//api/search/v1/hospital/nearby",
+        "https://medicobackend.vercel.app/api/search/v1/hospital/nearby",
         {
           params: {
             latitude,

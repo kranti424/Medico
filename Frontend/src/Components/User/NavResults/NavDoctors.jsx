@@ -45,7 +45,7 @@ const NavDoctors = () => {
   const fetchDoctors = async () => {
     try {
       const response = await axios.get(
-        "https://medicobackend.vercel.app//api/user/v2/doctors/all"
+        "https://medicobackend.vercel.app/api/user/v2/doctors/all"
       );
       setDoctors(response.data.data);
       setLoading(false);

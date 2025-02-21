@@ -10,7 +10,7 @@ import {
 } from "react-icons/fa";
 
 const API_URL =
-  "https://medicobackend.vercel.app//api/health/v2/exercise/calories";
+  "https://medicobackend.vercel.app/api/health/v2/exercise/calories";
 
 const ExerciseCalories = () => {
   const [query, setQuery] = useState("");

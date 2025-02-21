@@ -47,13 +47,13 @@ function HospitalDashboard() {
 
         // Fetch total doctors
         const doctorsResponse = await axios.get(
-          `https://medicobackend.vercel.app//api/v2/doctors/count/${hospitalData.email}`,
+          `https://medicobackend.vercel.app/api/v2/doctors/count/${hospitalData.email}`,
           { withCredentials: true }
         );
 
         // Fetch appointments stats
         const appointmentsResponse = await axios.get(
-          `https://medicobackend.vercel.app//api/v2/doctors/stats/${hospitalData.email}`,
+          `https://medicobackend.vercel.app/api/v2/doctors/stats/${hospitalData.email}`,
           { withCredentials: true }
         );
 

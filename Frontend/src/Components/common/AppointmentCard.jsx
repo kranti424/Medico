@@ -87,7 +87,7 @@ const AppointmentCard = ({ doctor, onClose }) => {
       };
 
       const response = await axios.post(
-        "https://medicobackend.vercel.app//api/appointments/create",
+        "https://medicobackend.vercel.app/api/appointments/create",
         appointmentData,
         {
           withCredentials: true,

@@ -19,7 +19,7 @@ const ClinicLogin = () => {
     // const validateToken = async () => {
     //   try {
     //     const response = await axios.get(
-    //       "https://medicobackend.vercel.app//api/token/validate",
+    //       "https://medicobackend.vercel.app/api/token/validate",
     //       {
     //         withCredentials: true, // Ensures cookies are sent automatically
     //         headers: {
@@ -67,7 +67,7 @@ const ClinicLogin = () => {
 
       try {
         const response = await axios.post(
-          "https://medicobackend.vercel.app//api/clinics/login",
+          "https://medicobackend.vercel.app/api/clinics/login",
           formData,
           {
             withCredentials: true,

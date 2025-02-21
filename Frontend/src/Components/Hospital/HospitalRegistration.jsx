@@ -42,7 +42,7 @@ const INDIA_STATES_CITIES = {
   Kerala: ["Thiruvananthapuram", "Kochi", "Kozhikode", "Thrissur"],
 };
 
-const API_URL = "https://medicobackend.vercel.app//api/hospitals";
+const API_URL = "https://medicobackend.vercel.app/api/hospitals";
 
 const LocationMarker = ({ position, setPosition }) => {
   const map = useMapEvents({
@@ -251,7 +251,7 @@ function HospitalRegistration() {
         }
 
         const response = await axios.post(
-          "https://medicobackend.vercel.app//api/hospitals/register",
+          "https://medicobackend.vercel.app/api/hospitals/register",
           hospitalData,
           {
             headers: {

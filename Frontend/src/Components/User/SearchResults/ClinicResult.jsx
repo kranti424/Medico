@@ -79,7 +79,7 @@ const ClinicResults = () => {
       };
 
       const response = await axios.post(
-        "https://medicobackend.vercel.app//api/v1/reviews/create",
+        "https://medicobackend.vercel.app/api/v1/reviews/create",
         reviewData
       );
 
@@ -98,7 +98,7 @@ const ClinicResults = () => {
     try {
       setSelectedClinic(clinic);
       const response = await axios.get(
-        `https://medicobackend.vercel.app//api/v1/reviews/clinic/${clinic.email}`
+        `https://medicobackend.vercel.app/api/v1/reviews/clinic/${clinic.email}`
       );
       setClinicReviews(response.data.data);
       setShowReviews(true);

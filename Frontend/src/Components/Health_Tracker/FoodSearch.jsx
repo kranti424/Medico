@@ -9,8 +9,7 @@ import {
 } from "react-icons/fa";
 import { GiKnifeFork } from "react-icons/gi";
 
-const API_URL =
-  "https://medicobackend.vercel.app//api/health/v2/food/nutrition";
+const API_URL = "https://medicobackend.vercel.app/api/health/v2/food/nutrition";
 
 const FoodSearch = () => {
   const [query, setQuery] = useState("");

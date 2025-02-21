@@ -33,7 +33,7 @@ const ConsultantAppointments = () => {
         if (doctorData.role === "Doctor") {
           // For doctors, fetch appointments matching both doctor's email and organization email
           response = await axios.get(
-            `https://medicobackend.vercel.app//api/appointments/doctor?email=${doctorData.email}&organizationEmail=${doctorData.organizationEmail}`,
+            `https://medicobackend.vercel.app/api/appointments/doctor?email=${doctorData.email}&organizationEmail=${doctorData.organizationEmail}`,
             {
               withCredentials: true,
             }
@@ -94,7 +94,7 @@ const ConsultantAppointments = () => {
   const handleStatusUpdate = async (appointmentId, newStatus) => {
     try {
       const response = await axios.patch(
-        `https://medicobackend.vercel.app//api/appointments/${appointmentId}/status`,
+        `https://medicobackend.vercel.app/api/appointments/${appointmentId}/status`,
         { status: newStatus }, // Send only status in body
         {
           withCredentials: true, // This should be inside config, NOT body

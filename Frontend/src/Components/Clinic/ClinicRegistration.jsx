@@ -227,7 +227,7 @@ function ClinicRegistration() {
         }
 
         const response = await axios.post(
-          "https://medicobackend.vercel.app//api/clinics/register",
+          "https://medicobackend.vercel.app/api/clinics/register",
           clinicData,
           {
             withCredentials: true,

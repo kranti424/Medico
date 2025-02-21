@@ -104,7 +104,7 @@ const NavClinic = () => {
   const fetchClinics = async () => {
     try {
       const response = await axios.get(
-        "https://medicobackend.vercel.app//api/user/clinics/all"
+        "https://medicobackend.vercel.app/api/user/clinics/all"
       );
       setClinics(response.data.data);
       setLoading(false);
@@ -118,7 +118,7 @@ const NavClinic = () => {
     try {
       setSelectedClinic(clinic);
       const response = await axios.get(
-        `https://medicobackend.vercel.app//api/v1/reviews/clinic/${clinic.email}`
+        `https://medicobackend.vercel.app/api/v1/reviews/clinic/${clinic.email}`
       );
       setClinicReviews(response.data.data);
       setShowReviews(true);
@@ -146,7 +146,7 @@ const NavClinic = () => {
       };
 
       const response = await axios.post(
-        "https://medicobackend.vercel.app//api/v1/reviews/create",
+        "https://medicobackend.vercel.app/api/v1/reviews/create",
         reviewData
       );
 

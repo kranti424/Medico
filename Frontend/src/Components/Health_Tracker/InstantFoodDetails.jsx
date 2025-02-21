@@ -9,7 +9,7 @@ import {
   FaStore,
 } from "react-icons/fa";
 
-const API_URL = "https://medicobackend.vercel.app//api/health/v2/food/search";
+const API_URL = "https://medicobackend.vercel.app/api/health/v2/food/search";
 
 const InstantFoodDetails = () => {
   const [query, setQuery] = useState("");

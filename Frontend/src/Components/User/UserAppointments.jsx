@@ -31,7 +31,7 @@ const UserAppointments = () => {
         if (!userData) throw new Error("No user data found");
 
         const response = await axios.get(
-          `https://medicobackend.vercel.app//api/appointments/user/${userData.email}`,
+          `https://medicobackend.vercel.app/api/appointments/user/${userData.email}`,
           { withCredentials: true }
         );
 
@@ -83,7 +83,7 @@ const UserAppointments = () => {
   const handleStatusUpdate = async (appointmentId, newStatus) => {
     try {
       const response = await axios.patch(
-        `https://medicobackend.vercel.app//api/appointments/${appointmentId}/status`,
+        `https://medicobackend.vercel.app/api/appointments/${appointmentId}/status`,
         { status: newStatus, withCredentials: true }
       );
 

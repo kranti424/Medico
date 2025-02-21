@@ -41,7 +41,7 @@ function ConsultantLogin() {
     //   if (token) {
     //     try {
     //       const response = await axios.get(
-    //         "https://medicobackend.vercel.app//api/token/validate",
+    //         "https://medicobackend.vercel.app/api/token/validate",
     //         {
     //           withCredentials: true,
     //         }
@@ -78,7 +78,7 @@ function ConsultantLogin() {
         };
 
         const response = await axios.post(
-          "https://medicobackend.vercel.app//api/consultant/login",
+          "https://medicobackend.vercel.app/api/consultant/login",
           loginData,
           {
             withCredentials: true,

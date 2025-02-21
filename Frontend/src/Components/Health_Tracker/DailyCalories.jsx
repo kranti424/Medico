@@ -3,7 +3,7 @@ import axios from "axios";
 import { FaSpinner, FaInfoCircle } from "react-icons/fa";
 
 const API_URL =
-  "https://medicobackend.vercel.app//api/health/v2/calculate/dailycalories";
+  "https://medicobackend.vercel.app/api/health/v2/calculate/dailycalories";
 
 const DailyCalories = () => {
   const [formData, setFormData] = useState({
