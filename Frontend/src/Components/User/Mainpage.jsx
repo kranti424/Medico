@@ -139,7 +139,7 @@ const HealthcareSearch = () => {
       }
 
       const response = await fetch(
-        `https://medicobackend.vercel.app/${endpoint}?${params}`
+        `https://medicobackend.vercel.app${endpoint}?${params}`
       );
       const data = await response.json();
 
