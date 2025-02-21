@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { debounce } from 'lodash';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { debounce } from "lodash";
 import {
   FaSearch,
   FaSpinner,
@@ -9,7 +9,7 @@ import {
   FaStore,
 } from "react-icons/fa";
 
-const API_URL = "https://medico-care-theta.vercel.app/api/health/v2/food/search";
+const API_URL = "https://medicobackend.vercel.app//api/health/v2/food/search";
 
 const InstantFoodDetails = () => {
   const [query, setQuery] = useState("");

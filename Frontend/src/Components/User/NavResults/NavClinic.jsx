@@ -1,24 +1,23 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import axios from 'axios';
-import { 
-  FaClinicMedical, FaMapMarkerAlt, FaPhone,  
-  FaGlobe, FaDirections, FaInfo 
-} from 'react-icons/fa';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState, useEffect, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import axios from "axios";
 import {
-  Star,
-  MessageSquare,
-  Navigation,
-  Info
-} from "lucide-react";
-import UserNav from '../../Navbar/UserNav';
+  FaClinicMedical,
+  FaMapMarkerAlt,
+  FaPhone,
+  FaGlobe,
+  FaDirections,
+  FaInfo,
+} from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Star, MessageSquare, Navigation, Info } from "lucide-react";
+import UserNav from "../../Navbar/UserNav";
 
 // Add these utility functions at the top of the file
 const calculateDistance = (lat1, lon1, lat2, lon2) => {
   if (!lat1 || !lon1 || !lat2 || !lon2) return null;
-  
+
   // Convert to radians
   const R = 6371; // Earth's radius in kilometers
   const lat1Rad = deg2rad(lat1);
@@ -27,12 +26,14 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
   const dLon = deg2rad(lon2 - lon1);
 
   // Haversine formula
-  const a = 
-    Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(lat1Rad) * Math.cos(lat2Rad) * 
-    Math.sin(dLon/2) * Math.sin(dLon/2);
-    
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1Rad) *
+      Math.cos(lat2Rad) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   const distance = R * c;
 
   return distance.toFixed(1); // Return with 1 decimal place
@@ -44,18 +45,20 @@ const deg2rad = (deg) => deg * (Math.PI / 180);
 const getSortedClinics = (clinics, sortBy, userLocation) => {
   return [...clinics].sort((a, b) => {
     if (sortBy === "distance" && userLocation) {
-      const distanceA = calculateDistance(
-        a.latitude,
-        a.longitude,
-        userLocation.lat,
-        userLocation.lng
-      ) || 0;
-      const distanceB = calculateDistance(
-        b.latitude,
-        b.longitude,
-        userLocation.lat,
-        userLocation.lng
-      ) || 0;
+      const distanceA =
+        calculateDistance(
+          a.latitude,
+          a.longitude,
+          userLocation.lat,
+          userLocation.lng
+        ) || 0;
+      const distanceB =
+        calculateDistance(
+          b.latitude,
+          b.longitude,
+          userLocation.lat,
+          userLocation.lng
+        ) || 0;
       return distanceA - distanceB;
     } else if (sortBy === "name") {
       return a.clinicName.localeCompare(b.clinicName);
@@ -77,7 +80,7 @@ const NavClinic = () => {
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [showReviews, setShowReviews] = useState(false);
   const [rating, setRating] = useState(0);
-  const [reviewText, setReviewText] = useState('');
+  const [reviewText, setReviewText] = useState("");
   const [clinicReviews, setClinicReviews] = useState([]);
 
   useEffect(() => {
@@ -87,23 +90,21 @@ const NavClinic = () => {
   // The getUserLocation function sets the user's current coordinates.
   const getUserLocation = () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setUserLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
-          // Also sort by distance after location is set
-          setSortBy("distance");
-        },
-      );
+      navigator.geolocation.getCurrentPosition((position) => {
+        setUserLocation({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+        // Also sort by distance after location is set
+        setSortBy("distance");
+      });
     }
   };
 
   const fetchClinics = async () => {
     try {
       const response = await axios.get(
-        "https://medico-care-theta.vercel.app/api/user/clinics/all"
+        "https://medicobackend.vercel.app//api/user/clinics/all"
       );
       setClinics(response.data.data);
       setLoading(false);
@@ -117,46 +118,46 @@ const NavClinic = () => {
     try {
       setSelectedClinic(clinic);
       const response = await axios.get(
-        `https://medico-care-theta.vercel.app/api/v1/reviews/clinic/${clinic.email}`
+        `https://medicobackend.vercel.app//api/v1/reviews/clinic/${clinic.email}`
       );
       setClinicReviews(response.data.data);
       setShowReviews(true);
     } catch (error) {
-      toast.error('Failed to fetch reviews');
+      toast.error("Failed to fetch reviews");
     }
   };
 
   const handleReviewSubmit = async () => {
-    const userData = JSON.parse(localStorage.getItem('userData'));
+    const userData = JSON.parse(localStorage.getItem("userData"));
 
     if (!userData) {
-      toast.error('Please login to submit review');
+      toast.error("Please login to submit review");
       return;
     }
 
     try {
       const reviewData = {
         reviewerEmail: userData.email,
-        userType: 'User',
-        entityType: 'Clinic',
+        userType: "User",
+        entityType: "Clinic",
         entityEmail: selectedClinic.email,
         rating,
         text: reviewText,
       };
 
       const response = await axios.post(
-        'https://medico-care-theta.vercel.app/api/v1/reviews/create',
+        "https://medicobackend.vercel.app//api/v1/reviews/create",
         reviewData
       );
 
       if (response.data.success) {
-        toast.success('Review submitted successfully!');
+        toast.success("Review submitted successfully!");
         setShowReviewModal(false);
         setRating(0);
-        setReviewText('');
+        setReviewText("");
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Failed to submit review');
+      toast.error(error.response?.data?.message || "Failed to submit review");
     }
   };
 
@@ -198,25 +199,25 @@ const NavClinic = () => {
         theme="light"
       />
       <div className="relative overflow-hidden bg-gradient-to-r from-emerald-600/90 to-teal-600/90 backdrop-blur-sm">
-                <div className="absolute inset-0 bg-[url('/api/placeholder/1920/400')] opacity-10 mix-blend-overlay" />
-                <div className="relative max-w-7xl mx-auto px-4 py-16">
-                  <motion.div
-                    initial={{ y: -20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    className="text-center"
-                  >
-                    <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                      Find Nearby Clinics
-                    </h1>
-                    <p className="text-emerald-50 text-lg max-w-2xl mx-auto">
-                      Discover and connect with healthcare facilities in your area. Get
-                      instant access to hospital information, directions, and contact
-                      details.
-                    </p>
-                  </motion.div>
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-emerald-50/90" />
-              </div>
+        <div className="absolute inset-0 bg-[url('/api/placeholder/1920/400')] opacity-10 mix-blend-overlay" />
+        <div className="relative max-w-7xl mx-auto px-4 py-16">
+          <motion.div
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            className="text-center"
+          >
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Find Nearby Clinics
+            </h1>
+            <p className="text-emerald-50 text-lg max-w-2xl mx-auto">
+              Discover and connect with healthcare facilities in your area. Get
+              instant access to hospital information, directions, and contact
+              details.
+            </p>
+          </motion.div>
+        </div>
+        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-emerald-50/90" />
+      </div>
       {/* Top Controls */}
       <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="bg-white/80 backdrop-blur-md rounded-xl shadow-lg p-4 flex justify-between items-center gap-4">
@@ -256,7 +257,7 @@ const NavClinic = () => {
           // Replace table with a list of clinic cards
           <div className="space-y-4">
             {sortedClinics.map((clinic) => {
-              const distance = userLocation 
+              const distance = userLocation
                 ? calculateDistance(
                     parseFloat(clinic.latitude),
                     parseFloat(clinic.longitude),
@@ -396,7 +397,9 @@ const NavClinic = () => {
                     <button
                       key={star}
                       onClick={() => setRating(star)}
-                      className={`text-2xl ${rating >= star ? 'text-yellow-400' : 'text-gray-300'}`}
+                      className={`text-2xl ${
+                        rating >= star ? "text-yellow-400" : "text-gray-300"
+                      }`}
                     >
                       ★
                     </button>
@@ -418,7 +421,7 @@ const NavClinic = () => {
                   onClick={() => {
                     setShowReviewModal(false);
                     setRating(0);
-                    setReviewText('');
+                    setReviewText("");
                   }}
                   className="flex-1 py-2 bg-gray-100 rounded-lg"
                 >
@@ -455,8 +458,8 @@ const NavClinic = () => {
                 <div key={review._id} className="bg-gray-50 p-4 rounded-lg">
                   <div className="flex items-center justify-between mb-2">
                     <div className="text-yellow-400">
-                      {'★'.repeat(review.rating)}
-                      {'☆'.repeat(5 - review.rating)}
+                      {"★".repeat(review.rating)}
+                      {"☆".repeat(5 - review.rating)}
                     </div>
                     <div className="text-sm text-gray-500">
                       {new Date(review.createdAt).toLocaleDateString()}

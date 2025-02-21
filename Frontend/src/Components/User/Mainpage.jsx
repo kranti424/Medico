@@ -139,7 +139,7 @@ const HealthcareSearch = () => {
       }
 
       const response = await fetch(
-        `https://medico-care-theta.vercel.app${endpoint}?${params}`
+        `https://medicobackend.vercel.app/${endpoint}?${params}`
       );
       const data = await response.json();
 
@@ -308,7 +308,7 @@ const HealthcareSearch = () => {
 
     try {
       const response = await axios.post(
-        "https://medico-care-theta.vercel.app/api/webreviews/create",
+        "https://medicobackend.vercel.app//api/webreviews/create",
         {
           email: userEmail,
           userType,
@@ -732,4 +732,3 @@ const HealthcareSearch = () => {
 };
 
 export default HealthcareSearch;
-

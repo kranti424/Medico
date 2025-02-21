@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   FaUserMd,
   FaClock,
@@ -203,7 +203,7 @@ const ClinicAllDoctors = () => {
 
     try {
       const response = await fetch(
-        `https://medico-care-theta.vercel.app/api/doctors/delete/${doctorId}`,
+        `https://medicobackend.vercel.app//api/doctors/delete/${doctorId}`,
         {
           method: "DELETE",
           credentials: "include",
@@ -228,7 +228,7 @@ const ClinicAllDoctors = () => {
       try {
         const clinicData = JSON.parse(localStorage.getItem("clinicData"));
         const response = await fetch(
-          `https://medico-care-theta.vercel.app/api/doctors/organization/${clinicData.id}`,
+          `https://medicobackend.vercel.app//api/doctors/organization/${clinicData.id}`,
           {
             credentials: "include",
           }

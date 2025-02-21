@@ -14,12 +14,15 @@ const FindHospital = () => {
 
   const fetchNearbyHospitals = async (latitude, longitude) => {
     try {
-      const response = await axios.get("https://medico-care-theta.vercel.app/api/search/v1/hospital/nearby", {
-        params: {
-          latitude,
-          longitude,
-        },
-      });
+      const response = await axios.get(
+        "https://medicobackend.vercel.app//api/search/v1/hospital/nearby",
+        {
+          params: {
+            latitude,
+            longitude,
+          },
+        }
+      );
 
       if (response.data.success) {
         setHospitals(response.data.results || []);

@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMapEvents,
+} from "react-leaflet";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import "leaflet/dist/leaflet.css";
@@ -19,7 +25,7 @@ import {
 } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast, Toaster } from "react-hot-toast";
-import axios from 'axios';
+import axios from "axios";
 
 // Add Indian States and Cities
 const INDIA_STATES_CITIES = {
@@ -36,7 +42,7 @@ const INDIA_STATES_CITIES = {
   Kerala: ["Thiruvananthapuram", "Kochi", "Kozhikode", "Thrissur"],
 };
 
-const API_URL = 'https://medico-care-theta.vercel.app/api/hospitals';
+const API_URL = "https://medicobackend.vercel.app//api/hospitals";
 
 const LocationMarker = ({ position, setPosition }) => {
   const map = useMapEvents({
@@ -47,7 +53,7 @@ const LocationMarker = ({ position, setPosition }) => {
   });
 
   return position ? (
-    <Marker 
+    <Marker
       position={position}
       draggable={true}
       eventHandlers={{
@@ -66,7 +72,7 @@ function HospitalRegistration() {
   const [cities, setCities] = useState([]);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [searchAddress, setSearchAddress] = useState('');
+  const [searchAddress, setSearchAddress] = useState("");
 
   const [formData, setFormData] = useState({
     hospitalName: "",
@@ -205,30 +211,34 @@ function HospitalRegistration() {
     if (validateStep()) {
       try {
         setIsLoading(true);
-        toast.loading('Registering hospital...');
+        toast.loading("Registering hospital...");
 
         const hospitalData = new FormData();
 
         // Required fields validation
         const requiredFields = [
-          'hospitalName',
-          'email',
-          'phone',
-          'state',
-          'city',
-          'address',
-          'password'
+          "hospitalName",
+          "email",
+          "phone",
+          "state",
+          "city",
+          "address",
+          "password",
         ];
 
-        const missingFields = requiredFields.filter(field => !formData[field]);
+        const missingFields = requiredFields.filter(
+          (field) => !formData[field]
+        );
         if (missingFields.length > 0) {
-          throw new Error(`Missing required fields: ${missingFields.join(', ')}`);
+          throw new Error(
+            `Missing required fields: ${missingFields.join(", ")}`
+          );
         }
 
         // Append form fields properly
-        Object.keys(formData).forEach(key => {
-          if (key === 'image' && formData[key]) {
-            hospitalData.append('image', formData[key]);
+        Object.keys(formData).forEach((key) => {
+          if (key === "image" && formData[key]) {
+            hospitalData.append("image", formData[key]);
           } else if (formData[key]) {
             hospitalData.append(key, formData[key]);
           }
@@ -236,17 +246,16 @@ function HospitalRegistration() {
 
         // Add location data if available
         if (selectedLocation) {
-          hospitalData.append('latitude', selectedLocation.lat.toString());
-          hospitalData.append('longitude', selectedLocation.lng.toString());
+          hospitalData.append("latitude", selectedLocation.lat.toString());
+          hospitalData.append("longitude", selectedLocation.lng.toString());
         }
 
-
         const response = await axios.post(
-          'https://medico-care-theta.vercel.app/api/hospitals/register',
+          "https://medicobackend.vercel.app//api/hospitals/register",
           hospitalData,
           {
             headers: {
-              'Content-Type': 'multipart/form-data',
+              "Content-Type": "multipart/form-data",
             },
             withCredentials: true,
           }
@@ -255,18 +264,18 @@ function HospitalRegistration() {
         toast.dismiss();
 
         if (response.data.success) {
-          toast.success('Registration successful!');
+          toast.success("Registration successful!");
         }
-
       } catch (error) {
         toast.dismiss();
         // console.log('Full error:', error);
         // console.log('Error response:', error.response?.data);
-        
-        const errorMessage = error.response?.data?.message 
-          || error.message 
-          || 'Registration failed';
-        
+
+        const errorMessage =
+          error.response?.data?.message ||
+          error.message ||
+          "Registration failed";
+
         toast.error(errorMessage);
       } finally {
         setIsLoading(false);
@@ -397,7 +406,7 @@ function HospitalRegistration() {
                   <FaSearch className="w-5 h-5" />
                 </button>
               </div>
-              
+
               <button
                 type="button"
                 onClick={getCurrentLocation}
@@ -419,13 +428,17 @@ function HospitalRegistration() {
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                   attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 />
-                <LocationMarker position={selectedLocation} setPosition={setSelectedLocation} />
+                <LocationMarker
+                  position={selectedLocation}
+                  setPosition={setSelectedLocation}
+                />
               </MapContainer>
-              
+
               {selectedLocation && (
                 <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm p-4 rounded-lg shadow-lg">
                   <p className="text-sm font-medium text-gray-700">
-                    Selected Location: {selectedLocation.lat.toFixed(6)}, {selectedLocation.lng.toFixed(6)}
+                    Selected Location: {selectedLocation.lat.toFixed(6)},{" "}
+                    {selectedLocation.lng.toFixed(6)}
                   </p>
                 </div>
               )}
@@ -549,19 +562,19 @@ function HospitalRegistration() {
                 error={errors.confirmPassword}
                 required
               />
-              
+
               {/* Password strength indicator */}
               {formData.password && (
                 <div className="space-y-2">
                   <p className="text-sm text-gray-600">Password strength:</p>
                   <div className="h-2 bg-gray-200 rounded-full">
-                    <div 
+                    <div
                       className={`h-full rounded-full transition-all ${
-                        formData.password.length < 6 
-                          ? 'w-1/4 bg-red-500' 
-                          : formData.password.length < 8 
-                          ? 'w-2/4 bg-yellow-500'
-                          : 'w-full bg-green-500'
+                        formData.password.length < 6
+                          ? "w-1/4 bg-red-500"
+                          : formData.password.length < 8
+                          ? "w-2/4 bg-yellow-500"
+                          : "w-full bg-green-500"
                       }`}
                     />
                   </div>
@@ -585,14 +598,15 @@ function HospitalRegistration() {
               <div key={num} className="flex flex-col items-center z-10">
                 <motion.div
                   initial={{ scale: 0.9 }}
-                  animate={{ 
+                  animate={{
                     scale: step === num ? 1.1 : 1,
-                    backgroundColor: step >= num ? '#2563eb' : '#fff'
+                    backgroundColor: step >= num ? "#2563eb" : "#fff",
                   }}
                   className={`w-14 h-14 rounded-full flex items-center justify-center text-lg font-semibold
-                    ${step >= num 
-                      ? "text-white shadow-lg shadow-blue-200" 
-                      : "text-gray-400 border-2 border-gray-200"
+                    ${
+                      step >= num
+                        ? "text-white shadow-lg shadow-blue-200"
+                        : "text-gray-400 border-2 border-gray-200"
                     } transition-all duration-300`}
                 >
                   {num}
@@ -644,15 +658,21 @@ function HospitalRegistration() {
                 {step > 1 && (
                   <button
                     type="button"
-                    onClick={() => setStep(prev => prev - 1)}
+                    onClick={() => setStep((prev) => prev - 1)}
                     className="group px-6 py-3 border-2 border-blue-600 text-blue-600 rounded-xl 
                       hover:bg-blue-50 transition-all duration-300 flex items-center space-x-2"
                   >
                     <motion.span
                       initial={{ x: 0 }}
                       animate={{ x: -3 }}
-                      transition={{ repeat: Infinity, duration: 1, repeatType: "reverse" }}
-                    >←</motion.span>
+                      transition={{
+                        repeat: Infinity,
+                        duration: 1,
+                        repeatType: "reverse",
+                      }}
+                    >
+                      ←
+                    </motion.span>
                     <span>Previous Step</span>
                   </button>
                 )}
@@ -668,20 +688,28 @@ function HospitalRegistration() {
                     <motion.span
                       initial={{ x: 0 }}
                       animate={{ x: 3 }}
-                      transition={{ repeat: Infinity, duration: 1, repeatType: "reverse" }}
-                    >→</motion.span>
+                      transition={{
+                        repeat: Infinity,
+                        duration: 1,
+                        repeatType: "reverse",
+                      }}
+                    >
+                      →
+                    </motion.span>
                   </button>
                 ) : (
                   <button
                     type="submit"
                     disabled={isLoading}
                     className={`ml-auto px-6 py-3 bg-gradient-to-r 
-                      ${isLoading 
-                        ? 'from-gray-400 to-gray-500 cursor-not-allowed' 
-                        : 'from-green-600 to-green-700 hover:from-green-700 hover:to-green-800'} 
+                      ${
+                        isLoading
+                          ? "from-gray-400 to-gray-500 cursor-not-allowed"
+                          : "from-green-600 to-green-700 hover:from-green-700 hover:to-green-800"
+                      } 
                       text-white rounded-xl transform transition-all hover:scale-105 shadow-lg`}
                   >
-                    {isLoading ? 'Registering...' : 'Complete Registration'}
+                    {isLoading ? "Registering..." : "Complete Registration"}
                   </button>
                 )}
               </div>
@@ -711,35 +739,31 @@ const InputField = ({ icon, label, error, ...props }) => (
   </div>
 );
 
-const SelectField = ({ 
-  icon, 
-  label, 
-  options, 
-  error,
-  name,
-  ...props 
-}) => (
+const SelectField = ({ icon, label, options, error, name, ...props }) => (
   <div className="space-y-2">
     <div className="flex items-center text-gray-600 mb-1">
       {icon && React.cloneElement(icon, { className: "mr-2 text-blue-500" })}
       <label>{label}</label>
     </div>
-    <select 
+    <select
       {...props}
       name={name}
       className={`w-full px-4 py-3 rounded-lg border 
-        ${error ? 'border-red-500' : 'border-gray-300'} 
+        ${error ? "border-red-500" : "border-gray-300"} 
         focus:outline-none focus:ring-2 focus:ring-blue-500`}
     >
       <option value="">Select {label}</option>
-      {name === "state" 
-        ? Object.keys(INDIA_STATES_CITIES).map(state => (
-            <option key={state} value={state}>{state}</option>
+      {name === "state"
+        ? Object.keys(INDIA_STATES_CITIES).map((state) => (
+            <option key={state} value={state}>
+              {state}
+            </option>
           ))
-        : options.map(option => (
-            <option key={option} value={option}>{option}</option>
-          ))
-      }
+        : options.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
     </select>
     {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
   </div>

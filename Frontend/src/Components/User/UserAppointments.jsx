@@ -31,7 +31,7 @@ const UserAppointments = () => {
         if (!userData) throw new Error("No user data found");
 
         const response = await axios.get(
-          `https://medico-care-theta.vercel.app/api/appointments/user/${userData.email}`,
+          `https://medicobackend.vercel.app//api/appointments/user/${userData.email}`,
           { withCredentials: true }
         );
 
@@ -83,10 +83,8 @@ const UserAppointments = () => {
   const handleStatusUpdate = async (appointmentId, newStatus) => {
     try {
       const response = await axios.patch(
-        `https://medico-care-theta.vercel.app/api/appointments/${appointmentId}/status`,
-        { status: newStatus,
-          withCredentials: true
-         }
+        `https://medicobackend.vercel.app//api/appointments/${appointmentId}/status`,
+        { status: newStatus, withCredentials: true }
       );
 
       if (response.data.success) {

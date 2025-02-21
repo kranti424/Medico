@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 import { FaSpinner, FaInfoCircle } from "react-icons/fa";
 
-const API_URL = "https://medico-care-theta.vercel.app/api/health/v2/calculate/dailycalories";
+const API_URL =
+  "https://medicobackend.vercel.app//api/health/v2/calculate/dailycalories";
 
 const DailyCalories = () => {
   const [formData, setFormData] = useState({

@@ -1,7 +1,13 @@
 import React, { useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMapEvents,
+} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import {
   FaClinicMedical,
   FaEnvelope,
@@ -17,7 +23,7 @@ import {
 } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast, Toaster } from "react-hot-toast";
-import axios from 'axios';
+import axios from "axios";
 const INDIA_STATES_CITIES = {
   "Andhra Pradesh": ["Visakhapatnam", "Vijayawada", "Guntur", "Nellore"],
   Maharashtra: ["Mumbai", "Pune", "Nagpur", "Nashik", "Aurangabad"],
@@ -41,7 +47,7 @@ const LocationMarker = ({ position, setPosition }) => {
   });
 
   return position ? (
-    <Marker 
+    <Marker
       position={position}
       draggable={true}
       eventHandlers={{
@@ -60,7 +66,7 @@ function ClinicRegistration() {
   const [cities, setCities] = useState([]);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [searchAddress, setSearchAddress] = useState('');
+  const [searchAddress, setSearchAddress] = useState("");
   const [formData, setFormData] = useState({
     clinicName: "",
     email: "",
@@ -179,14 +185,14 @@ function ClinicRegistration() {
         const { lat, lon } = response.data[0];
         const location = { lat: parseFloat(lat), lng: parseFloat(lon) };
         setSelectedLocation(location);
-        setFormData(prev => ({
+        setFormData((prev) => ({
           ...prev,
           latitude: location.lat,
-          longitude: location.lng
+          longitude: location.lng,
         }));
       }
     } catch (error) {
-      toast.error('Error searching location');
+      toast.error("Error searching location");
     }
   };
 
@@ -196,65 +202,67 @@ function ClinicRegistration() {
     }
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  if (validateStep()) {
-    try {
-      setIsLoading(true);
-      toast.loading('Registering clinic...');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (validateStep()) {
+      try {
+        setIsLoading(true);
+        toast.loading("Registering clinic...");
 
-      const clinicData = new FormData();
+        const clinicData = new FormData();
 
-      // Append all form fields
-      Object.keys(formData).forEach(key => {
-        if (key === 'image' && formData[key]) {
-          clinicData.append('image', formData[key]);
-        } else if (key !== 'confirmPassword') {
-          clinicData.append(key, formData[key]);
-        }
-      });
-
-      // Add location data
-      if (selectedLocation) {
-        clinicData.append('latitude', selectedLocation.lat);
-        clinicData.append('longitude', selectedLocation.lng);
-      }
-
-      const response = await axios.post(
-        'https://medico-care-theta.vercel.app/api/clinics/register',
-        clinicData,
-        {  
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'multipart/form-data'
+        // Append all form fields
+        Object.keys(formData).forEach((key) => {
+          if (key === "image" && formData[key]) {
+            clinicData.append("image", formData[key]);
+          } else if (key !== "confirmPassword") {
+            clinicData.append(key, formData[key]);
           }
+        });
+
+        // Add location data
+        if (selectedLocation) {
+          clinicData.append("latitude", selectedLocation.lat);
+          clinicData.append("longitude", selectedLocation.lng);
         }
-      );
 
-      toast.dismiss();
+        const response = await axios.post(
+          "https://medicobackend.vercel.app//api/clinics/register",
+          clinicData,
+          {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
 
-      if (response.data.success) {
-        toast.success('Registration successful!');
-        // localStorage.setItem('clinicToken', response.data.token);
-        // Optional: Redirect to login or dashboard
-        // window.location.href = '/clinic/login';
-      } else {
-        throw new Error(response.data.message);
+        toast.dismiss();
+
+        if (response.data.success) {
+          toast.success("Registration successful!");
+          // localStorage.setItem('clinicToken', response.data.token);
+          // Optional: Redirect to login or dashboard
+          // window.location.href = '/clinic/login';
+        } else {
+          throw new Error(response.data.message);
+        }
+      } catch (error) {
+        toast.dismiss();
+        const errorMessage =
+          error.response?.data?.message ||
+          error.message ||
+          "Registration failed";
+        toast.error(errorMessage);
+      } finally {
+        setIsLoading(false);
       }
-
-    } catch (error) {
-      toast.dismiss();
-      const errorMessage = error.response?.data?.message || error.message || 'Registration failed';
-      toast.error(errorMessage);
-    } finally {
-      setIsLoading(false);
     }
-  }
-};
+  };
 
-// Update the submit button in the JSX
+  // Update the submit button in the JSX
 
-// ***************************************************
+  // ***************************************************
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-blue-100 py-12 px-4">
       <div className="max-w-4xl mx-auto">
@@ -417,7 +425,7 @@ const handleSubmit = async (e) => {
                   <h3 className="text-lg font-semibold text-gray-700">
                     Clinic Location
                   </h3>
-                  
+
                   <div className="flex flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0">
                     <div className="flex-1 relative">
                       <input
@@ -437,7 +445,7 @@ const handleSubmit = async (e) => {
                         <FaSearch className="w-5 h-5" />
                       </button>
                     </div>
-                    
+
                     <button
                       type="button"
                       onClick={getCurrentLocation}
@@ -449,11 +457,15 @@ const handleSubmit = async (e) => {
                       <span>Use Current Location</span>
                     </button>
                   </div>
-  
-                  <div className="relative h-[400px] rounded-lg overflow-hidden border-2 
-                                border-gray-200 shadow-lg">
+
+                  <div
+                    className="relative h-[400px] rounded-lg overflow-hidden border-2 
+                                border-gray-200 shadow-lg"
+                  >
                     <MapContainer
-                      center={selectedLocation || { lat: 20.5937, lng: 78.9629 }}
+                      center={
+                        selectedLocation || { lat: 20.5937, lng: 78.9629 }
+                      }
                       zoom={selectedLocation ? 13 : 5}
                       style={{ height: "100%", width: "100%" }}
                       className="z-0"
@@ -462,24 +474,26 @@ const handleSubmit = async (e) => {
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                       />
-                      <LocationMarker 
-                        position={selectedLocation} 
+                      <LocationMarker
+                        position={selectedLocation}
                         setPosition={(pos) => {
                           setSelectedLocation(pos);
-                          setFormData(prev => ({
+                          setFormData((prev) => ({
                             ...prev,
                             latitude: pos.lat,
-                            longitude: pos.lng
+                            longitude: pos.lng,
                           }));
-                        }} 
+                        }}
                       />
                     </MapContainer>
-                    
+
                     {selectedLocation && (
-                      <div className="absolute bottom-4 left-4 right-4 bg-white/90 
-                                    backdrop-blur-sm p-4 rounded-lg shadow-lg">
+                      <div
+                        className="absolute bottom-4 left-4 right-4 bg-white/90 
+                                    backdrop-blur-sm p-4 rounded-lg shadow-lg"
+                      >
                         <p className="text-sm font-medium text-gray-700">
-                          Selected Location: {selectedLocation.lat.toFixed(6)}, 
+                          Selected Location: {selectedLocation.lat.toFixed(6)},
                           {selectedLocation.lng.toFixed(6)}
                         </p>
                       </div>
@@ -557,7 +571,10 @@ const handleSubmit = async (e) => {
                                 type="button"
                                 onClick={() => {
                                   setImagePreview(null);
-                                  setFormData((prev) => ({ ...prev, image: null }));
+                                  setFormData((prev) => ({
+                                    ...prev,
+                                    image: null,
+                                  }));
                                 }}
                                 className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full"
                               >
@@ -660,26 +677,44 @@ const handleSubmit = async (e) => {
                   </button>
                 ) : (
                   <button
-                  type="submit"
-                  disabled={isLoading}
-                  className={`ml-auto px-6 py-3 bg-gradient-to-r 
-                    ${isLoading 
-                      ? 'from-gray-400 to-gray-500 cursor-not-allowed' 
-                      : 'from-green-600 to-green-700 hover:from-green-700 hover:to-green-800'} 
+                    type="submit"
+                    disabled={isLoading}
+                    className={`ml-auto px-6 py-3 bg-gradient-to-r 
+                    ${
+                      isLoading
+                        ? "from-gray-400 to-gray-500 cursor-not-allowed"
+                        : "from-green-600 to-green-700 hover:from-green-700 hover:to-green-800"
+                    } 
                     text-white rounded-xl transform transition-all hover:scale-105 shadow-lg flex items-center space-x-2`}
-                >
-                  {isLoading ? (
-                    <>
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      Registering...
-                    </>
-                  ) : (
-                    'Complete Registration'
-                  )}
-                </button>
+                  >
+                    {isLoading ? (
+                      <>
+                        <svg
+                          className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
+                        </svg>
+                        Registering...
+                      </>
+                    ) : (
+                      "Complete Registration"
+                    )}
+                  </button>
                 )}
               </div>
             </motion.form>

@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   FaUserMd,
   FaClock,
@@ -11,7 +11,7 @@ import {
   FaTrash,
 } from "react-icons/fa";
 import { toast } from "react-hot-toast";
-import HospitalNavbar from '../Navbar/HospitalNav';
+import HospitalNavbar from "../Navbar/HospitalNav";
 
 const Section = ({ title, children }) => (
   <div>
@@ -154,7 +154,7 @@ const AllDoctors = () => {
     if (window.confirm("Are you sure you want to delete this doctor?")) {
       try {
         const response = await fetch(
-          `https://medico-care-theta.vercel.app/api/doctors/delete/${doctorId}`,
+          `https://medicobackend.vercel.app//api/doctors/delete/${doctorId}`,
           {
             method: "DELETE",
             credentials: "include",
@@ -182,7 +182,7 @@ const AllDoctors = () => {
       try {
         const hospitalData = JSON.parse(localStorage.getItem("hospitalData"));
         const response = await fetch(
-          `https://medico-care-theta.vercel.app/api/doctors/organization/${hospitalData.id}`,
+          `https://medicobackend.vercel.app//api/doctors/organization/${hospitalData.id}`,
           {
             credentials: "include",
           }
@@ -206,10 +206,10 @@ const AllDoctors = () => {
   if (loading) {
     return (
       <>
-      <HospitalNavbar />
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
-      </div>
+        <HospitalNavbar />
+        <div className="min-h-screen flex items-center justify-center bg-gray-100">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+        </div>
       </>
     );
   }
@@ -217,10 +217,10 @@ const AllDoctors = () => {
   if (error) {
     return (
       <>
-      <HospitalNavbar />
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <div className="text-red-500">Error: {error}</div>
-      </div>
+        <HospitalNavbar />
+        <div className="min-h-screen flex items-center justify-center bg-gray-100">
+          <div className="text-red-500">Error: {error}</div>
+        </div>
       </>
     );
   }
@@ -228,143 +228,143 @@ const AllDoctors = () => {
   return (
     <>
       <HospitalNavbar />
-    <div className="min-h-screen bg-gray-50 p-8">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
-          Our Medical Professionals
-        </h2>
+      <div className="min-h-screen bg-gray-50 p-8">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
+            Our Medical Professionals
+          </h2>
 
-        <div className="bg-white rounded-xl shadow-md overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-100">
-                <tr>
-                  {[
-                    "Doctor",
-                    "Contact",
-                    "Specialties",
-                    "Timings",
-                    "Fees",
-                    "Actions",
-                  ].map((header) => (
-                    <th
-                    key={header}
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+          <div className="bg-white rounded-xl shadow-md overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-100">
+                  <tr>
+                    {[
+                      "Doctor",
+                      "Contact",
+                      "Specialties",
+                      "Timings",
+                      "Fees",
+                      "Actions",
+                    ].map((header) => (
+                      <th
+                        key={header}
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        {header}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {doctors.map((doctor) => (
+                    <motion.tr
+                      key={doctor._id}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="hover:bg-gray-50 transition-colors"
                     >
-                      {header}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {doctors.map((doctor) => (
-                  <motion.tr
-                  key={doctor._id}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="hover:bg-gray-50 transition-colors"
-                  >
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="flex-shrink-0 h-10 w-10 rounded-full overflow-hidden">
-                          {doctor.profileImage ? (
-                            <img
-                            src={doctor.profileImage}
-                              alt={doctor.name}
-                              className="h-10 w-10 object-cover"
-                              onError={(e) => {
-                                e.target.onerror = null;
-                                e.target.src =
-                                  "https://via.placeholder.com/40?text=Dr";
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center">
+                          <div className="flex-shrink-0 h-10 w-10 rounded-full overflow-hidden">
+                            {doctor.profileImage ? (
+                              <img
+                                src={doctor.profileImage}
+                                alt={doctor.name}
+                                className="h-10 w-10 object-cover"
+                                onError={(e) => {
+                                  e.target.onerror = null;
+                                  e.target.src =
+                                    "https://via.placeholder.com/40?text=Dr";
                                 }}
-                                />
-                          ) : (
-                            <div className="h-full w-full bg-blue-100 flex items-center justify-center">
-                              <FaUserMd className="text-blue-600" />
+                              />
+                            ) : (
+                              <div className="h-full w-full bg-blue-100 flex items-center justify-center">
+                                <FaUserMd className="text-blue-600" />
+                              </div>
+                            )}
+                          </div>
+                          <div className="ml-4">
+                            <div className="text-sm font-medium text-gray-900">
+                              {doctor.name}
                             </div>
-                          )}
-                        </div>
-                        <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900">
-                            {doctor.name}
-                          </div>
-                          <div className="text-sm text-gray-500">
-                            {doctor.degrees.join(", ")}
+                            <div className="text-sm text-gray-500">
+                              {doctor.degrees.join(", ")}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="text-sm text-gray-900">
-                        {doctor.email}
-                      </div>
-                      <div className="text-sm text-gray-500">
-                        {doctor.phone}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex flex-wrap gap-1">
-                        {doctor.specialties.map((specialty, index) => (
-                          <span
-                          key={index}
-                          className="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full"
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="text-sm text-gray-900">
+                          {doctor.email}
+                        </div>
+                        <div className="text-sm text-gray-500">
+                          {doctor.phone}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex flex-wrap gap-1">
+                          {doctor.specialties.map((specialty, index) => (
+                            <span
+                              key={index}
+                              className="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full"
+                            >
+                              {specialty}
+                            </span>
+                          ))}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="text-sm text-gray-900">
+                          {doctor.timeSlots.start} - {doctor.timeSlots.end}
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          {doctor.availableDays.join(", ")}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        ₹{doctor.consultationFees}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <div className="flex items-center justify-end gap-4">
+                          <button
+                            onClick={() => {
+                              setSelectedDoctor(doctor);
+                              setShowModal(true);
+                            }}
+                            className="text-blue-600 hover:text-blue-900 flex items-center gap-2"
                           >
-                            {specialty}
-                          </span>
-                        ))}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="text-sm text-gray-900">
-                        {doctor.timeSlots.start} - {doctor.timeSlots.end}
-                      </div>
-                      <div className="text-xs text-gray-500">
-                        {doctor.availableDays.join(", ")}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      ₹{doctor.consultationFees}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <div className="flex items-center justify-end gap-4">
-                        <button
-                          onClick={() => {
-                            setSelectedDoctor(doctor);
-                            setShowModal(true);
-                          }}
-                          className="text-blue-600 hover:text-blue-900 flex items-center gap-2"
+                            <FaEye /> View
+                          </button>
+                          <button
+                            onClick={() => deleteDoctor(doctor._id)}
+                            className="text-red-600 hover:text-red-900 flex items-center gap-2"
                           >
-                          <FaEye /> View
-                        </button>
-                        <button
-                          onClick={() => deleteDoctor(doctor._id)}
-                          className="text-red-600 hover:text-red-900 flex items-center gap-2"
-                          >
-                          <FaTrash /> Delete
-                        </button>
-                      </div>
-                    </td>
-                  </motion.tr>
-                ))}
-              </tbody>
-            </table>
+                            <FaTrash /> Delete
+                          </button>
+                        </div>
+                      </td>
+                    </motion.tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-      </div>
 
-      <AnimatePresence>
-        {showModal && selectedDoctor && (
-          <DoctorDetailModal
-            doctor={selectedDoctor}
-            onClose={() => {
-              setShowModal(false);
-              setSelectedDoctor(null);
-            }}
-          />
-        )}
-      </AnimatePresence>
-    </div>
-            </>
+        <AnimatePresence>
+          {showModal && selectedDoctor && (
+            <DoctorDetailModal
+              doctor={selectedDoctor}
+              onClose={() => {
+                setShowModal(false);
+                setSelectedDoctor(null);
+              }}
+            />
+          )}
+        </AnimatePresence>
+      </div>
+    </>
   );
 };
 

@@ -62,13 +62,13 @@ function ClinicDashboard() {
 
         // Fetch total doctors
         const doctorsResponse = await axios.get(
-          `https://medico-care-theta.vercel.app/api/clinic/doctors/count/${clinicData.email}`,
+          `https://medicobackend.vercel.app//api/clinic/doctors/count/${clinicData.email}`,
           { withCredentials: true }
         );
 
         // Fetch appointments stats
         const appointmentsResponse = await axios.get(
-          `https://medico-care-theta.vercel.app/api/clinic/stats/${clinicData.email}`,
+          `https://medicobackend.vercel.app//api/clinic/stats/${clinicData.email}`,
           { withCredentials: true }
         );
 

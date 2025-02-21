@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import axios from 'axios';
-import AppointmentCard from '../../common/AppointmentCard';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import axios from "axios";
+import AppointmentCard from "../../common/AppointmentCard";
 import {
   FaUserMd,
   FaMapMarkerAlt,
@@ -12,7 +12,7 @@ import {
 } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import UserNav from '../../Navbar/UserNav'
+import UserNav from "../../Navbar/UserNav";
 
 import DoctorProfile from "./DoctorProfile";
 
@@ -45,7 +45,7 @@ const NavDoctors = () => {
   const fetchDoctors = async () => {
     try {
       const response = await axios.get(
-        "https://medico-care-theta.vercel.app/api/user/v2/doctors/all"
+        "https://medicobackend.vercel.app//api/user/v2/doctors/all"
       );
       setDoctors(response.data.data);
       setLoading(false);
@@ -55,8 +55,6 @@ const NavDoctors = () => {
       toast.error("Failed to load doctors");
     }
   };
-
-  
 
   // Calculate distance using Haversine formula
   const calculateDistance = (doctorLat, doctorLng) => {
@@ -107,8 +105,6 @@ const NavDoctors = () => {
       return true;
     });
 
-  
-
   const handleNearMe = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -127,8 +123,6 @@ const NavDoctors = () => {
     }
   };
 
-  
-
   const calculateAge = (dob) => {
     const birthDate = new Date(dob);
     const today = new Date();
@@ -141,10 +135,10 @@ const NavDoctors = () => {
   };
 
   const handleBookAppointment = async (doctor) => {
-    const userData = await JSON.parse(localStorage.getItem('userData'));
-    
+    const userData = await JSON.parse(localStorage.getItem("userData"));
+
     if (!userData) {
-      toast.error('Please login to book appointment');
+      toast.error("Please login to book appointment");
       return;
     }
 
@@ -165,7 +159,7 @@ const NavDoctors = () => {
 
       // Doctor Info
       doctorName: doctor.name,
-      doctorEmail: doctor.email
+      doctorEmail: doctor.email,
     };
 
     setAppointmentData(appointmentInfo);
@@ -176,8 +170,6 @@ const NavDoctors = () => {
     setSelectedDoctor(doctor);
     setShowProfile(true);
   };
-
-  
 
   return (
     <>

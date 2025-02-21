@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { FaEnvelope, FaLock, FaHospital } from 'react-icons/fa';
-import { motion } from 'framer-motion';
-import { toast, Toaster } from 'react-hot-toast';
-import axios from 'axios'; // Import Axios for API requests
-import Cookies from 'js-cookie'; // Import Cookies for handling cookies
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { FaEnvelope, FaLock, FaHospital } from "react-icons/fa";
+import { motion } from "framer-motion";
+import { toast, Toaster } from "react-hot-toast";
+import axios from "axios"; // Import Axios for API requests
+import Cookies from "js-cookie"; // Import Cookies for handling cookies
 
 function HospitalLogin() {
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
+    email: "",
+    password: "",
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false); // State to handle loading
@@ -19,12 +19,11 @@ function HospitalLogin() {
     // const validateToken = async () => {
     //   try {
     //     const response = await axios.get(
-    //       "https://medico-care-theta.vercel.app/api/token/validate",
+    //       "https://medicobackend.vercel.app//api/token/validate",
     //       {
     //         withCredentials: true, // Ensures cookies are sent automatically
     //       }
     //     );
-  
     //     const isthere = localStorage.getItem("hospitalData");
     //     if (response.data.success && isthere) {
     //       navigate("/hospital/dashboard");
@@ -37,10 +36,8 @@ function HospitalLogin() {
     //     navigate("/hospitallogin"); // Redirect on failure
     //   }
     // };
-  
     // validateToken();
   }, [navigate]);
-  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -67,7 +64,7 @@ function HospitalLogin() {
 
       try {
         const response = await axios.post(
-          "https://medico-care-theta.vercel.app/api/hospitals/login",
+          "https://medicobackend.vercel.app//api/hospitals/login",
           formData,
           {
             withCredentials: true,
@@ -136,11 +133,13 @@ function HospitalLogin() {
                 value={formData.email}
                 onChange={handleInputChange}
                 className={`appearance-none rounded-lg relative block w-full px-4 py-3 border ${
-                  errors.email ? 'border-red-500' : 'border-gray-300'
+                  errors.email ? "border-red-500" : "border-gray-300"
                 } placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
                 placeholder="Enter hospital email"
               />
-              {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+              {errors.email && (
+                <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+              )}
             </div>
 
             <div>
@@ -154,11 +153,13 @@ function HospitalLogin() {
                 value={formData.password}
                 onChange={handleInputChange}
                 className={`appearance-none rounded-lg relative block w-full px-4 py-3 border ${
-                  errors.password ? 'border-red-500' : 'border-gray-300'
+                  errors.password ? "border-red-500" : "border-gray-300"
                 } placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
                 placeholder="Enter password"
               />
-              {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
+              {errors.password && (
+                <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+              )}
             </div>
           </div>
 
@@ -169,11 +170,11 @@ function HospitalLogin() {
             disabled={loading}
             className={`w-full flex justify-center py-3 px-4 rounded-lg text-white ${
               loading
-                ? 'bg-gray-400 cursor-not-allowed'
-                : 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800'
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800"
             } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transform transition-all duration-150`}
           >
-            {loading ? 'Signing in...' : 'Sign in'}
+            {loading ? "Signing in..." : "Sign in"}
           </motion.button>
 
           <div className="text-center">

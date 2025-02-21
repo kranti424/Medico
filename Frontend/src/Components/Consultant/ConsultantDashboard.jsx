@@ -44,7 +44,7 @@ function ConsultantDashboard() {
         }
 
         const response = await axios.get(
-          `https://medico-care-theta.vercel.app/api/v1/consultant/dashboard/${doctorData.email}/${doctorData.organizationEmail}`,
+          `https://medicobackend.vercel.app//api/v1/consultant/dashboard/${doctorData.email}/${doctorData.organizationEmail}`,
           { withCredentials: true }
         );
 

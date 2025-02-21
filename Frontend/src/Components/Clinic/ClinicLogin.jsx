@@ -4,7 +4,7 @@ import { FaEnvelope, FaLock, FaClinicMedical } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { toast, Toaster } from "react-hot-toast";
 import axios from "axios";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 const ClinicLogin = () => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const ClinicLogin = () => {
     // const validateToken = async () => {
     //   try {
     //     const response = await axios.get(
-    //       "https://medico-care-theta.vercel.app/api/token/validate",
+    //       "https://medicobackend.vercel.app//api/token/validate",
     //       {
     //         withCredentials: true, // Ensures cookies are sent automatically
     //         headers: {
@@ -27,7 +27,6 @@ const ClinicLogin = () => {
     //         },
     //       }
     //     );
-  
     //     const isthere = localStorage.getItem("clinicData");
     //     if (response.data.success && isthere) {
     //       navigate("/clinic/dashboard");
@@ -40,23 +39,21 @@ const ClinicLogin = () => {
     //     navigate("/cliniclogin"); // Redirect if validation fails
     //   }
     // };
-  
     // validateToken();
   }, [navigate]);
-  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.email) newErrors.email = 'Email is required';
-    if (!formData.password) newErrors.password = 'Password is required';
+    if (!formData.email) newErrors.email = "Email is required";
+    if (!formData.password) newErrors.password = "Password is required";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -70,7 +67,7 @@ const ClinicLogin = () => {
 
       try {
         const response = await axios.post(
-          "https://medico-care-theta.vercel.app/api/clinics/login",
+          "https://medicobackend.vercel.app//api/clinics/login",
           formData,
           {
             withCredentials: true,
@@ -80,21 +77,17 @@ const ClinicLogin = () => {
           }
         );
 
-
         if (response.data.success) {
           const clinicData = response.data.clinic;
-          
+
           Cookies.set("token", response.data.token, {
             expires: 7,
             // secure: true,
             sameSite: "None",
           });
-  
-          localStorage.setItem(
-            "clinicData",
-            JSON.stringify(clinicData)
-          );
-  
+
+          localStorage.setItem("clinicData", JSON.stringify(clinicData));
+
           toast.success("🎉 Login successful!");
           navigate("/clinic/dashboard");
         } else {
@@ -107,7 +100,6 @@ const ClinicLogin = () => {
       }
     }
   };
-  
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-teal-50 via-blue-50 to-purple-50 py-12 px-4 sm:px-6 lg:px-8 flex items-center justify-center">

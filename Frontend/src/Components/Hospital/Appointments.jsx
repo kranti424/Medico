@@ -29,8 +29,8 @@ const Appointments = () => {
       try {
         const hospitalData = JSON.parse(localStorage.getItem("hospitalData"));
         const response = await axios.get(
-          `https://medico-care-theta.vercel.app/api/appointments/all?email=${hospitalData.email}`,
-          { withCredentials: true } 
+          `https://medicobackend.vercel.app//api/appointments/all?email=${hospitalData.email}`,
+          { withCredentials: true }
         );
 
         if (response.data.success) {

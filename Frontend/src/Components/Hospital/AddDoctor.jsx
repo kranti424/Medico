@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback, memo, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect, useCallback, memo, useMemo } from "react";
+import { motion } from "framer-motion";
 import {
   FaUserMd,
   FaGraduationCap,
@@ -12,7 +12,7 @@ import {
 } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import HospitalNavbar from '../Navbar/HospitalNav';
+import HospitalNavbar from "../Navbar/HospitalNav";
 
 const InputField = React.memo(({ icon, label, error, required, ...props }) => (
   <div className="space-y-2">
@@ -274,11 +274,14 @@ const AddDoctor = () => {
         }
       });
 
-      const response = await fetch("https://medico-care-theta.vercel.app/api/doctors/add", {
-        method: "POST",
-        credentials: "include",
-        body: formDataToSend,
-      });
+      const response = await fetch(
+        "https://medicobackend.vercel.app//api/doctors/add",
+        {
+          method: "POST",
+          credentials: "include",
+          body: formDataToSend,
+        }
+      );
 
       const data = await response.json();
 
@@ -704,156 +707,156 @@ const AddDoctor = () => {
 
   return (
     <>
-    <HospitalNavbar />
-    <div
-      className="min-h-screen py-12 px-4 sm:px-6 lg:px-8"
-      style={{
-        backgroundImage: `url('https://img.freepik.com/free-vector/healthcare-blue-color-medical-concept-background_1055-10291.jpghttps://img.freepik.com/free-vector/medical-background-bright-blue-color_1017-11127.jpg')`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 to-blue-600/40" />
+      <HospitalNavbar />
+      <div
+        className="min-h-screen py-12 px-4 sm:px-6 lg:px-8"
+        style={{
+          backgroundImage: `url('https://img.freepik.com/free-vector/healthcare-blue-color-medical-concept-background_1055-10291.jpghttps://img.freepik.com/free-vector/medical-background-bright-blue-color_1017-11127.jpg')`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 to-blue-600/40" />
 
-      <div className="relative max-w-4xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="backdrop-blur-md bg-white/30 rounded-2xl shadow-2xl p-8 border border-white/20"
-        >
-          <h2 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
-            Add New Doctor
-          </h2>
+        <div className="relative max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="backdrop-blur-md bg-white/30 rounded-2xl shadow-2xl p-8 border border-white/20"
+          >
+            <h2 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
+              Add New Doctor
+            </h2>
 
-          <FormSteps />
+            <FormSteps />
 
-          <form onSubmit={handleSubmit} className="space-y-8">
-            {currentStep === 1 && (
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="bg-white/40 backdrop-blur-md rounded-xl p-6 shadow-lg"
-              >
-                <h3 className="text-xl font-semibold mb-4 text-gray-800">
-                  Basic Information
-                </h3>
-                {BasicInfo}
-                <div className="mt-6">{DescriptionAndImage}</div>
-              </motion.div>
-            )}
-
-            {currentStep === 2 && (
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="bg-white/40 backdrop-blur-md rounded-xl p-6 shadow-lg"
-              >
-                <h3 className="text-xl font-semibold mb-4 text-gray-800">
-                  Education & Experience
-                </h3>
-                {EducationExperience}
-              </motion.div>
-            )}
-
-            {currentStep === 3 && (
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="bg-white/40 backdrop-blur-md rounded-xl p-6 shadow-lg"
-              >
-                <h3 className="text-xl font-semibold mb-4 text-gray-800">
-                  Availability
-                </h3>
-                <Availability />
-              </motion.div>
-            )}
-
-            {currentStep === 4 && (
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="bg-white/40 backdrop-blur-md rounded-xl p-6 shadow-lg"
-              >
-                <h3 className="text-xl font-semibold mb-4 text-gray-800">
-                  Account Setup
-                </h3>
-                {AccountSetup}
-              </motion.div>
-            )}
-
-            <div className="flex justify-between pt-6">
-              {currentStep > 1 && (
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  type="button"
-                  onClick={() => setCurrentStep((curr) => curr - 1)}
-                  className="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 
-                           transition-all duration-200 shadow-lg hover:shadow-xl"
+            <form onSubmit={handleSubmit} className="space-y-8">
+              {currentStep === 1 && (
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="bg-white/40 backdrop-blur-md rounded-xl p-6 shadow-lg"
                 >
-                  Previous
-                </motion.button>
+                  <h3 className="text-xl font-semibold mb-4 text-gray-800">
+                    Basic Information
+                  </h3>
+                  {BasicInfo}
+                  <div className="mt-6">{DescriptionAndImage}</div>
+                </motion.div>
               )}
 
-              {currentStep < 4 ? (
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  type="button"
-                  onClick={() => setCurrentStep((curr) => curr + 1)}
-                  className="px-6 py-2 bg-gradient-to-r from-blue-600 to-blue-400 
+              {currentStep === 2 && (
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="bg-white/40 backdrop-blur-md rounded-xl p-6 shadow-lg"
+                >
+                  <h3 className="text-xl font-semibold mb-4 text-gray-800">
+                    Education & Experience
+                  </h3>
+                  {EducationExperience}
+                </motion.div>
+              )}
+
+              {currentStep === 3 && (
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="bg-white/40 backdrop-blur-md rounded-xl p-6 shadow-lg"
+                >
+                  <h3 className="text-xl font-semibold mb-4 text-gray-800">
+                    Availability
+                  </h3>
+                  <Availability />
+                </motion.div>
+              )}
+
+              {currentStep === 4 && (
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="bg-white/40 backdrop-blur-md rounded-xl p-6 shadow-lg"
+                >
+                  <h3 className="text-xl font-semibold mb-4 text-gray-800">
+                    Account Setup
+                  </h3>
+                  {AccountSetup}
+                </motion.div>
+              )}
+
+              <div className="flex justify-between pt-6">
+                {currentStep > 1 && (
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    type="button"
+                    onClick={() => setCurrentStep((curr) => curr - 1)}
+                    className="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 
+                           transition-all duration-200 shadow-lg hover:shadow-xl"
+                  >
+                    Previous
+                  </motion.button>
+                )}
+
+                {currentStep < 4 ? (
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    type="button"
+                    onClick={() => setCurrentStep((curr) => curr + 1)}
+                    className="px-6 py-2 bg-gradient-to-r from-blue-600 to-blue-400 
                            text-white rounded-lg hover:from-blue-700 hover:to-blue-500 
                            transition-all duration-200 shadow-lg hover:shadow-xl ml-auto"
-                >
-                  Next
-                </motion.button>
-              ) : (
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  type="submit"
-                  disabled={isSubmitting}
-                  className={`px-8 py-2 bg-gradient-to-r from-blue-600 to-blue-400 
+                  >
+                    Next
+                  </motion.button>
+                ) : (
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    type="submit"
+                    disabled={isSubmitting}
+                    className={`px-8 py-2 bg-gradient-to-r from-blue-600 to-blue-400 
                            text-white rounded-lg hover:from-blue-700 hover:to-blue-500 
                            transition-all duration-200 shadow-lg hover:shadow-xl ml-auto
                            ${
                              isSubmitting ? "opacity-75 cursor-not-allowed" : ""
                            }`}
-                >
-                  {isSubmitting ? (
-                    <div className="flex items-center">
-                      <svg
-                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        ></circle>
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        ></path>
-                      </svg>
-                      Submitting...
-                    </div>
-                  ) : (
-                    "Submit"
-                  )}
-                </motion.button>
-              )}
-            </div>
-          </form>
-        </motion.div>
+                  >
+                    {isSubmitting ? (
+                      <div className="flex items-center">
+                        <svg
+                          className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
+                        </svg>
+                        Submitting...
+                      </div>
+                    ) : (
+                      "Submit"
+                    )}
+                  </motion.button>
+                )}
+              </div>
+            </form>
+          </motion.div>
+        </div>
       </div>
-    </div>
     </>
   );
 };

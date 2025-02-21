@@ -1,11 +1,23 @@
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { FaMapMarkerAlt } from 'react-icons/fa';
-import { Building2, Phone, MapPin, Navigation, Info, X, Mail, Globe, Calendar, Star, MessageSquare } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { toast } from 'react-toastify';
-import axios from 'axios';
-import UserNav from '../../Navbar/UserNav';
+import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
+import { FaMapMarkerAlt } from "react-icons/fa";
+import {
+  Building2,
+  Phone,
+  MapPin,
+  Navigation,
+  Info,
+  X,
+  Mail,
+  Globe,
+  Calendar,
+  Star,
+  MessageSquare,
+} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "react-toastify";
+import axios from "axios";
+import UserNav from "../../Navbar/UserNav";
 
 const HospitalResults = () => {
   const { state } = useLocation();
@@ -18,7 +30,7 @@ const HospitalResults = () => {
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [showReviews, setShowReviews] = useState(false);
   const [rating, setRating] = useState(0);
-  const [reviewText, setReviewText] = useState('');
+  const [reviewText, setReviewText] = useState("");
   const [hospitalReviews, setHospitalReviews] = useState([]);
 
   const calculateDistance = (hospitalLat, hospitalLng) => {
@@ -62,7 +74,7 @@ const HospitalResults = () => {
     try {
       setLoading(true);
       // Find the hospital from existing results instead of making API call
-      const hospital = results.find(h => h._id === hospitalId);
+      const hospital = results.find((h) => h._id === hospitalId);
       if (hospital) {
         setSelectedHospital(hospital);
         setShowModal(true);
@@ -81,12 +93,12 @@ const HospitalResults = () => {
 
   const handleReviewSubmit = async () => {
     const userData = JSON.parse(localStorage.getItem("userData"));
-  
+
     if (!userData) {
       toast.error("Please login to submit review");
       return;
     }
-  
+
     try {
       const reviewData = {
         reviewerEmail: userData.email,
@@ -96,12 +108,12 @@ const HospitalResults = () => {
         rating,
         text: reviewText,
       };
-  
-      const response = await axios.post(  
-        "https://medico-care-theta.vercel.app/api/v1/reviews/create",
+
+      const response = await axios.post(
+        "https://medicobackend.vercel.app//api/v1/reviews/create",
         reviewData
       );
-  
+
       if (response.data.success) {
         toast.success("Review submitted successfully!");
         setShowReviewModal(false);
@@ -117,7 +129,7 @@ const HospitalResults = () => {
     try {
       setSelectedHospital(hospital);
       const response = await axios.get(
-        `https://medico-care-theta.vercel.app/api/v1/reviews/hospital/${hospital.email}`
+        `https://medicobackend.vercel.app//api/v1/reviews/hospital/${hospital.email}`
       );
       setHospitalReviews(response.data.data);
       setShowReviews(true);
@@ -286,7 +298,9 @@ const HospitalResults = () => {
                     <button
                       key={star}
                       onClick={() => setRating(star)}
-                      className={`text-2xl ${rating >= star ? 'text-yellow-400' : 'text-gray-300'}`}
+                      className={`text-2xl ${
+                        rating >= star ? "text-yellow-400" : "text-gray-300"
+                      }`}
                     >
                       ★
                     </button>
@@ -308,7 +322,7 @@ const HospitalResults = () => {
                   onClick={() => {
                     setShowReviewModal(false);
                     setRating(0);
-                    setReviewText('');
+                    setReviewText("");
                   }}
                   className="flex-1 py-2 bg-gray-100 rounded-lg"
                 >
@@ -345,8 +359,8 @@ const HospitalResults = () => {
                 <div key={review._id} className="bg-gray-50 p-4 rounded-lg">
                   <div className="flex items-center justify-between mb-2">
                     <div className="text-yellow-400">
-                      {'★'.repeat(review.rating)}
-                      {'☆'.repeat(5 - review.rating)}
+                      {"★".repeat(review.rating)}
+                      {"☆".repeat(5 - review.rating)}
                     </div>
                     <div className="text-sm text-gray-500">
                       {new Date(review.createdAt).toLocaleDateString()}

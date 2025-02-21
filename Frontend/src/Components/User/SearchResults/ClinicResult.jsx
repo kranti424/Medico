@@ -1,31 +1,37 @@
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  FaClinicMedical, FaMapMarkerAlt, FaPhone, 
-  FaDirections, FaInfo, FaGlobe,  
-} from 'react-icons/fa';
-import { Star, MessageSquare,Navigation,Info } from "lucide-react";
-import { ToastContainer, toast } from 'react-toastify';
-import axios from 'axios';
-import 'react-toastify/dist/ReactToastify.css';
-import UserNav from '../../Navbar/UserNav';
+import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  FaClinicMedical,
+  FaMapMarkerAlt,
+  FaPhone,
+  FaDirections,
+  FaInfo,
+  FaGlobe,
+} from "react-icons/fa";
+import { Star, MessageSquare, Navigation, Info } from "lucide-react";
+import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
+import "react-toastify/dist/ReactToastify.css";
+import UserNav from "../../Navbar/UserNav";
 
 const calculateDistance = (lat1, lon1, lat2, lon2) => {
   if (!lat1 || !lon1 || !lat2 || !lon2) return null;
-  
+
   const R = 6371;
   const lat1Rad = deg2rad(lat1);
   const lat2Rad = deg2rad(lat2);
   const dLat = deg2rad(lat2 - lat1);
   const dLon = deg2rad(lon2 - lon1);
 
-  const a = 
-    Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(lat1Rad) * Math.cos(lat2Rad) * 
-    Math.sin(dLon/2) * Math.sin(dLon/2);
-    
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1Rad) *
+      Math.cos(lat2Rad) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return (R * c).toFixed(1);
 };
 
@@ -40,30 +46,28 @@ const ClinicResults = () => {
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [showReviews, setShowReviews] = useState(false);
   const [rating, setRating] = useState(0);
-  const [reviewText, setReviewText] = useState('');
+  const [reviewText, setReviewText] = useState("");
   const [clinicReviews, setClinicReviews] = useState([]);
 
   const getUserLocation = () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setUserLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
-        },
-      );
+      navigator.geolocation.getCurrentPosition((position) => {
+        setUserLocation({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+      });
     }
   };
 
   const handleReviewSubmit = async () => {
     const userData = JSON.parse(localStorage.getItem("userData"));
-  
+
     if (!userData) {
       toast.error("Please login to submit review");
       return;
     }
-  
+
     try {
       const reviewData = {
         reviewerEmail: userData.email,
@@ -73,12 +77,12 @@ const ClinicResults = () => {
         rating,
         text: reviewText,
       };
-  
-      const response = await axios.post(  
-        "https://medico-care-theta.vercel.app/api/v1/reviews/create",
+
+      const response = await axios.post(
+        "https://medicobackend.vercel.app//api/v1/reviews/create",
         reviewData
       );
-  
+
       if (response.data.success) {
         toast.success("Review submitted successfully!");
         setShowReviewModal(false);
@@ -94,7 +98,7 @@ const ClinicResults = () => {
     try {
       setSelectedClinic(clinic);
       const response = await axios.get(
-        `https://medico-care-theta.vercel.app/api/v1/reviews/clinic/${clinic.email}`
+        `https://medicobackend.vercel.app//api/v1/reviews/clinic/${clinic.email}`
       );
       setClinicReviews(response.data.data);
       setShowReviews(true);
@@ -104,7 +108,7 @@ const ClinicResults = () => {
   };
 
   const renderClinicCard = (clinic) => {
-    const distance = userLocation 
+    const distance = userLocation
       ? calculateDistance(
           parseFloat(clinic.latitude),
           parseFloat(clinic.longitude),
@@ -137,8 +141,10 @@ const ClinicResults = () => {
             )}
           </div>
           {distance && (
-            <span className="absolute -bottom-2 -right-2 px-2 py-1 bg-green-500 text-white 
-                           text-xs font-medium rounded-full shadow-md">
+            <span
+              className="absolute -bottom-2 -right-2 px-2 py-1 bg-green-500 text-white 
+                           text-xs font-medium rounded-full shadow-md"
+            >
               {distance} km
             </span>
           )}
@@ -146,7 +152,9 @@ const ClinicResults = () => {
 
         {/* Clinic Info */}
         <div className="flex-1 text-center md:text-left">
-          <h3 className="text-lg font-semibold text-gray-800">{clinic.clinicName}</h3>
+          <h3 className="text-lg font-semibold text-gray-800">
+            {clinic.clinicName}
+          </h3>
           <div className="mt-2 space-y-1 text-sm text-gray-600">
             <p className="flex items-center justify-center md:justify-start">
               <FaPhone className="w-4 h-4 mr-2 text-green-500" />
@@ -195,7 +203,7 @@ const ClinicResults = () => {
               <Star className="w-4 h-4" />
               Add Review
             </button>
-            
+
             <button
               onClick={() => fetchClinicReviews(clinic)}
               className="w-auto bg-blue-50 text-blue-600 py-1.5 px-3 
@@ -221,9 +229,7 @@ const ClinicResults = () => {
           <h1 className="text-3xl font-bold text-white mb-2">
             Clinics matching "{searchTerm}"
           </h1>
-          <p className="text-emerald-100">
-            Found {results.length} results
-          </p>
+          <p className="text-emerald-100">Found {results.length} results</p>
         </div>
       </div>
 
@@ -262,16 +268,28 @@ const ClinicResults = () => {
                     <FaClinicMedical className="w-10 h-10 text-green-600" />
                   </div>
                   <div>
-                    <h2 className="text-2xl font-bold">{selectedClinic.clinicName}</h2>
+                    <h2 className="text-2xl font-bold">
+                      {selectedClinic.clinicName}
+                    </h2>
                     <p>Established {selectedClinic.establishedYear}</p>
                   </div>
                 </div>
-                <button 
-                  onClick={() => setShowProfile(false)} 
+                <button
+                  onClick={() => setShowProfile(false)}
                   className="text-white hover:text-gray-200"
                 >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
                   </svg>
                 </button>
               </div>
@@ -280,7 +298,9 @@ const ClinicResults = () => {
               <div className="p-6 space-y-6">
                 {/* Contact Information */}
                 <div className="bg-green-50 rounded-lg p-4 shadow-md">
-                  <h3 className="font-semibold mb-2 text-green-700">Contact Information</h3>
+                  <h3 className="font-semibold mb-2 text-green-700">
+                    Contact Information
+                  </h3>
                   <div className="space-y-2">
                     <p className="flex items-center gap-2">
                       <FaPhone className="text-green-600" />
@@ -301,25 +321,32 @@ const ClinicResults = () => {
 
                 {/* Location */}
                 <div>
-                  <h3 className="font-semibold mb-2 text-green-700">Location</h3>
+                  <h3 className="font-semibold mb-2 text-green-700">
+                    Location
+                  </h3>
                   <div className="bg-gray-50 p-4 rounded-lg shadow-md">
                     <p className="flex items-center gap-2">
                       <FaMapMarkerAlt className="text-green-600" />
-                      {selectedClinic.address}, {selectedClinic.city}, {selectedClinic.state}, {selectedClinic.pincode}
+                      {selectedClinic.address}, {selectedClinic.city},{" "}
+                      {selectedClinic.state}, {selectedClinic.pincode}
                     </p>
                   </div>
                 </div>
 
                 {/* Description */}
                 <div>
-                  <h3 className="font-semibold mb-2 text-green-700">About Clinic</h3>
+                  <h3 className="font-semibold mb-2 text-green-700">
+                    About Clinic
+                  </h3>
                   <p className="text-gray-600">{selectedClinic.description}</p>
                 </div>
 
                 {/* Image */}
                 {selectedClinic.image && (
                   <div>
-                    <h3 className="font-semibold mb-2 text-green-700">Clinic Image</h3>
+                    <h3 className="font-semibold mb-2 text-green-700">
+                      Clinic Image
+                    </h3>
                     <img
                       src={selectedClinic.image}
                       alt={selectedClinic.clinicName}
@@ -366,7 +393,9 @@ const ClinicResults = () => {
                     <button
                       key={star}
                       onClick={() => setRating(star)}
-                      className={`text-2xl ${rating >= star ? 'text-yellow-400' : 'text-gray-300'}`}
+                      className={`text-2xl ${
+                        rating >= star ? "text-yellow-400" : "text-gray-300"
+                      }`}
                     >
                       ★
                     </button>
@@ -388,7 +417,7 @@ const ClinicResults = () => {
                   onClick={() => {
                     setShowReviewModal(false);
                     setRating(0);
-                    setReviewText('');
+                    setReviewText("");
                   }}
                   className="flex-1 py-2 bg-gray-100 rounded-lg"
                 >
@@ -425,8 +454,8 @@ const ClinicResults = () => {
                 <div key={review._id} className="bg-gray-50 p-4 rounded-lg">
                   <div className="flex items-center justify-between mb-2">
                     <div className="text-yellow-400">
-                      {'★'.repeat(review.rating)}
-                      {'☆'.repeat(5 - review.rating)}
+                      {"★".repeat(review.rating)}
+                      {"☆".repeat(5 - review.rating)}
                     </div>
                     <div className="text-sm text-gray-500">
                       {new Date(review.createdAt).toLocaleDateString()}

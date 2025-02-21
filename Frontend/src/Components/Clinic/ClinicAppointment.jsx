@@ -32,7 +32,7 @@ const ClinicAppointment = () => {
 
         // For doctors, fetch appointments matching both doctor's email and organization email
         response = await axios.get(
-          `https://medico-care-theta.vercel.app/api/appointments/all?email=${clinicData.email}`,
+          `https://medicobackend.vercel.app//api/appointments/all?email=${clinicData.email}`,
           { withCredentials: true }
         );
 
@@ -89,7 +89,7 @@ const ClinicAppointment = () => {
   const handleStatusUpdate = async (appointmentId, newStatus) => {
     try {
       const response = await axios.patch(
-        `https://medico-care-theta.vercel.app/api/appointments/${appointmentId}/status`,
+        `https://medicobackend.vercel.app//api/appointments/${appointmentId}/status`,
 
         { status: newStatus },
         { withCredentials: true }

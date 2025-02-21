@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaLock, FaUserMd, FaIdCard } from "react-icons/fa";
 import { motion } from "framer-motion";
@@ -38,11 +38,10 @@ function ConsultantLogin() {
     //   if (!token) {
     //     localStorage.removeItem("doctorData");
     //   }
-
     //   if (token) {
     //     try {
     //       const response = await axios.get(
-    //         "https://medico-care-theta.vercel.app/api/token/validate",
+    //         "https://medicobackend.vercel.app//api/token/validate",
     //         {
     //           withCredentials: true,
     //         }
@@ -62,10 +61,8 @@ function ConsultantLogin() {
     //     }
     //   }
     // };
-
     // validateToken();
   }, [navigate]);
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -81,7 +78,7 @@ function ConsultantLogin() {
         };
 
         const response = await axios.post(
-          "https://medico-care-theta.vercel.app/api/consultant/login",
+          "https://medicobackend.vercel.app//api/consultant/login",
           loginData,
           {
             withCredentials: true,

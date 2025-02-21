@@ -1,5 +1,5 @@
-import React, { useState, useCallback, memo, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useCallback, memo, useMemo } from "react";
+import { motion } from "framer-motion";
 import {
   FaUserMd,
   FaGraduationCap,
@@ -181,11 +181,14 @@ const ClinicAddDoctor = () => {
         }
       });
 
-      const response = await fetch("https://medico-care-theta.vercel.app/api/doctors/add", {
-        method: "POST",
-        credentials: "include",
-        body: formDataToSend,
-      });
+      const response = await fetch(
+        "https://medicobackend.vercel.app//api/doctors/add",
+        {
+          method: "POST",
+          credentials: "include",
+          body: formDataToSend,
+        }
+      );
 
       const data = await response.json();
 
